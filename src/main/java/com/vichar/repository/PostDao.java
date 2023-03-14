@@ -13,4 +13,7 @@ public interface PostDao extends JpaRepository<Post, Integer> {
     List<Post> findByUser(User user);
 
     List<Post> findByCategory(Category category);
+
+    List<Post> findByTitleContaining(String keyword);
+
 }

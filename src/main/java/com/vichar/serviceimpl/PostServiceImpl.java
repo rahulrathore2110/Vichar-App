@@ -1,6 +1,7 @@
 package com.vichar.serviceimpl;
 
 import com.vichar.DTO.PostDTO;
+import com.vichar.DTO.PostResponse;
 import com.vichar.exception.CategotyException;
 import com.vichar.exception.PostException;
 import com.vichar.exception.UserException;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -75,13 +77,29 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDTO> getAllPost(Integer pageNo, Integer pageSize) {
+    public PostResponse getAllPost(Integer pageNo, Integer pageSize, String sortBy, String sortDir) {
+        Sort sort = null;
+        if (sortDir.equalsIgnoreCase("asc")) {
+            sort = Sort.by(sortBy).ascending();
+        } else {
+            sort = Sort.by(sortBy).descending();
+        }
 
-        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
         Page<Post> pagePosts = this.postDao.findAll(pageable);
         List<Post> posts = pagePosts.getContent();
         List<PostDTO> postDTOS = posts.stream().map(post -> this.modelMapper.map(post, PostDTO.class)).collect(Collectors.toList());
-        return postDTOS;
+
+        PostResponse postResponse = new PostResponse();
+        postResponse.setContent(postDTOS);
+        ;
+        postResponse.setPageNumber(pagePosts.getNumber());
+        postResponse.setPageSize(pagePosts.getSize());
+        postResponse.setTotalElements(pagePosts.getTotalElements());
+        postResponse.setTotalPages(pagePosts.getTotalPages());
+        postResponse.setLastPage(pagePosts.isLast());
+
+        return postResponse;
     }
 
     @Override
@@ -112,6 +130,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDTO> searchPost(String keyword) {
-        return null;
+        List<Post> posts = this.postDao.findByTitleContaining(keyword);
+        List<PostDTO> postDTOS = posts.stream().map(post -> this.modelMapper.map(post, PostDTO.class)).collect(Collectors.toList());
+        return postDTOS;
     }
 }

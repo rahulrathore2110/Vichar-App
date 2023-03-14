@@ -1,6 +1,7 @@
 package com.vichar.service;
 
 import com.vichar.DTO.PostDTO;
+import com.vichar.DTO.PostResponse;
 import com.vichar.model.Post;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public interface PostService {
 
     public String deletePost(Integer postId);
 
-    public List<PostDTO> getAllPost(Integer pageNo, Integer pageSize);
+    public PostResponse getAllPost(Integer pageNo, Integer pageSize, String sortBy, String sortDir);
 
     public PostDTO getPostByIdPost(Integer postId);
 
@@ -24,4 +25,6 @@ public interface PostService {
     public List<PostDTO> getPostByUser(Integer userId);
 
     public List<PostDTO> searchPost(String keyword);
+
+
 }

@@ -13,6 +13,18 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(CommentException.class)
+    public ResponseEntity<MyErrorDetails> commentExceptionHandler(CommentException e, WebRequest req) {
+
+        MyErrorDetails err = new MyErrorDetails();
+        err.setTimeStamp(LocalDateTime.now());
+        err.setMessage(e.getMessage());
+        err.setDetails(req.getDescription(false));
+
+        return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+
+    }
+
     @ExceptionHandler(PostException.class)
     public ResponseEntity<MyErrorDetails> postExceptionHandler(PostException e, WebRequest req) {
 
