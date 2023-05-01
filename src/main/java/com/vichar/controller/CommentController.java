@@ -20,7 +20,7 @@ public class CommentController {
         return new ResponseEntity<>(commentDTO1, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{commentId}")
+    @DeleteMapping("/{commentId}")
     public ResponseEntity<String> deleteCommentHandler(@PathVariable Integer commentId) {
         String commentDTO1 = this.commentService.deleteComment(commentId);
         return new ResponseEntity<>(commentDTO1, HttpStatus.CREATED);

@@ -20,7 +20,6 @@ public class Post {
     private String title;
     @Column(length = 1000)
     private String content;
-    private String imageName;
     private Date addedDate;
     @ManyToOne
     private Category category;

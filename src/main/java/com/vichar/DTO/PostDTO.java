@@ -19,7 +19,6 @@ public class PostDTO {
     private int id;
     private String title;
     private String content;
-    private String imageName;
     private Date addedDate;
     private CategoryDTO category;
     private UserDTO user;

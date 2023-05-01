@@ -8,13 +8,13 @@ import java.util.List;
 
 @Service
 public interface UserService {
-    public UserDTO adduser(UserDTO userDTO);
+    UserDTO adduser(UserDTO userDTO);
 
-    public UserDTO updateUser(UserDTO userDTO);
+    UserDTO updateUser(UserDTO userDTO);
 
-    public UserDTO getUserById(Integer userId);
+    UserDTO getUserById(Integer userId);
 
-    public List<UserDTO> getAllUser();
+    List<UserDTO> getAllUser();
 
-    public String deleteUser(Integer userId);
+    String deleteUser(Integer userId);
 }

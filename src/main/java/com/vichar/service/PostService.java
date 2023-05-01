@@ -10,21 +10,21 @@ import java.util.List;
 @Service
 public interface PostService {
 
-    public PostDTO addPost(PostDTO postDTO, Integer UserId, Integer catId);
+    PostDTO addPost(PostDTO postDTO, Integer UserId, Integer catId);
 
-    public PostDTO updatePost(PostDTO postDTO);
+    PostDTO updatePost(PostDTO postDTO);
 
-    public String deletePost(Integer postId);
+    String deletePost(Integer postId);
 
-    public PostResponse getAllPost(Integer pageNo, Integer pageSize, String sortBy, String sortDir);
+    PostResponse getAllPost(Integer pageNo, Integer pageSize, String sortBy, String sortDir);
 
-    public PostDTO getPostByIdPost(Integer postId);
+    PostDTO getPostByIdPost(Integer postId);
 
-    public List<PostDTO> getPostByCategory(Integer catId);
+    List<PostDTO> getPostByCategory(Integer catId);
 
-    public List<PostDTO> getPostByUser(Integer userId);
+    List<PostDTO> getPostByUser(Integer userId);
 
-    public List<PostDTO> searchPost(String keyword);
+    List<PostDTO> searchPost(String keyword);
 
 
 }

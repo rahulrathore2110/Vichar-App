@@ -3,22 +3,15 @@ package com.vichar.controller;
 import com.vichar.DTO.PostDTO;
 import com.vichar.DTO.PostResponse;
 import com.vichar.config.Constants;
-import com.vichar.model.Post;
-import com.vichar.service.FileService;
 import com.vichar.service.PostService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 @RestController
@@ -28,10 +21,6 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @Autowired
-    private FileService fileService;
-    @Value("${project.images}")
-    private String path;
 
     @PostMapping("/user/{userId}/cat/{catId}")
     public ResponseEntity<PostDTO> addPostHandler(@Valid @RequestBody PostDTO postDTO, @PathVariable Integer userId,
@@ -86,22 +75,5 @@ public class PostController {
         return new ResponseEntity<>(post, HttpStatus.CREATED);
     }
 
-    @PostMapping("/upload/{postId}")
-    public ResponseEntity<PostDTO> uploadPostImageHandler(@Valid @RequestParam("image") MultipartFile image,
-                                                          @PathVariable Integer postId) throws IOException {
-        PostDTO postDTO = this.postService.getPostByIdPost(postId);
-        String filename = this.fileService.uploadImage(path, image);
 
-        postDTO.setImageName(filename);
-        this.postService.updatePost(postDTO);
-        return new ResponseEntity<>(postDTO, HttpStatus.CREATED);
-    }
-
-    @GetMapping(value = "/profile/{image}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public void getPostImageHandler(@Valid @PathVariable String image, HttpServletResponse response) throws IOException {
-        InputStream inputStream = this.fileService.getResource(path, image);
-        response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-        StreamUtils.copy(inputStream, response.getOutputStream());
-
-    }
 }

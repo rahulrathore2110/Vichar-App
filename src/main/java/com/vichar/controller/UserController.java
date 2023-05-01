@@ -17,6 +17,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+
     @PostMapping("/")
     public ResponseEntity<UserDTO> addUserHandler(@Valid @RequestBody UserDTO userDTO) {
         UserDTO userDTO1 = this.userService.adduser(userDTO);

@@ -47,7 +47,6 @@ public class PostServiceImpl implements PostService {
                 "found with this id : " + catId));
 
         Post post = this.modelMapper.map(postDTO, Post.class);
-        post.setImageName("default.png");
         post.setAddedDate(new Date());
         post.setUser(user);
         post.setCategory(category);
@@ -62,7 +61,6 @@ public class PostServiceImpl implements PostService {
                         "id : " + postDTO.getId()));
         post.setTitle(postDTO.getTitle());
         post.setContent(postDTO.getContent());
-        post.setImageName(postDTO.getImageName());
 
         Post post1 = this.postDao.save(post);
         return this.modelMapper.map(post, PostDTO.class);
@@ -92,7 +90,6 @@ public class PostServiceImpl implements PostService {
 
         PostResponse postResponse = new PostResponse();
         postResponse.setContent(postDTOS);
-        ;
         postResponse.setPageNumber(pagePosts.getNumber());
         postResponse.setPageSize(pagePosts.getSize());
         postResponse.setTotalElements(pagePosts.getTotalElements());
